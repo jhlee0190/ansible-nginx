@@ -1,0 +1,21 @@
+#- name: Enable nginx
+#  shell: "amazon-linux-extras enable nginx1.12"
+#  become: yes
+
+#- name: Install nginx
+#  yum:
+#    name: nginx
+#    state: latest
+- name: Install nginx
+  become: yes
+  apt:
+    name: nginx
+    state: latest
+
+- name: Copy nginx files
+  become: yes
+  copy:
+    src: "{{ role_path }}/files/nginx.conf"
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: Restart Nginx
